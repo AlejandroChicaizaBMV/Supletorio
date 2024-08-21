@@ -10,7 +10,7 @@ public class CSMainPanel extends JPanel {
     CSLogoPanel csLogoPanel                                 = new CSLogoPanel();
     CSSeccionExperimentosPanel csSeccionExperimentosPanel   = new CSSeccionExperimentosPanel();
     CSAlimentoIngestaPanel csAlimentoIngestaPanel           = new CSAlimentoIngestaPanel();
-    CSButtonsPanel csButtonsPanel                           = new CSButtonsPanel();
+    CSButtonsPanel csButtonsPanel                           = new CSButtonsPanel(csSeccionExperimentosPanel);
     CSDatosPanel csDatosPanel                               = new CSDatosPanel();
 
     public CSMainPanel() {

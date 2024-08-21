@@ -23,6 +23,22 @@ public class CSHormigaDTO {
             
             
             
+    public CSHormigaDTO(String csTipo, String csSexo, String csProvincia, String csIngestaNativa, String csGenoAlimento,
+            String csEstado) {
+        this.csTipo = csTipo;
+        this.csSexo = csSexo;
+        this.csProvincia = csProvincia;
+        this.csIngestaNativa = csIngestaNativa;
+        this.csGenoAlimento = csGenoAlimento;
+        this.csEstado = csEstado;
+    }
+
+
+
+
+
+
+
     public CSHormigaDTO(int csNHormiga, String csTipo, String csSexo, String csProvincia, String csIngestaNativa,
             String csGenoAlimento, String csEstado) {
         this.csNHormiga = csNHormiga;

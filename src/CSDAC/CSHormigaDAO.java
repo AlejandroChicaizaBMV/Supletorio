@@ -12,7 +12,7 @@ import CSDAC.CSDTO.CSHormigaDTO;
 
 public class CSHormigaDAO {
     private String csFilePath;
-    
+
     public CSHormigaDAO(String csFilePath) {
         this.csFilePath = csFilePath;
     }
@@ -23,50 +23,66 @@ public class CSHormigaDAO {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] valores = line.split(",");
-                CSHormigaDTO hormiga = new CSHormigaDTO(
-                    Integer.parseInt(valores[0]),
-                    valores[1],
-                    valores[2],
-                    valores[3],
-                    valores[4],
-                    valores[5],
-                    valores[6]
-                );
-                csHormigas.add(hormiga);
+                if (valores.length == 7) {  
+                    CSHormigaDTO hormiga = new CSHormigaDTO(
+                        Integer.parseInt(valores[0]), 
+                        valores[1],
+                        valores[2],
+                        valores[3],
+                        valores[4],
+                        valores[5],
+                        valores[6]
+                    );
+                    csHormigas.add(hormiga); 
+                } else {
+
+                }
             }
         }
         return csHormigas;
     }
+    
 
-        public void csCreate(CSHormigaDTO csHormigaDTO) throws IOException {
+    public void csCreate(CSHormigaDTO csHormigaDTO) throws IOException {
+        List<CSHormigaDTO> hormigas = csReadAll(); 
+        int nuevoId = hormigas.size() + 1;
+        csHormigaDTO.setCsNHormiga(nuevoId); // Asigna el nuevo ID como el siguiente en la secuencia
+    
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(csFilePath, true))) {
-            bw.write(csHormigaDTO.getCsNHormiga() + "," + 
+            bw.write(csHormigaDTO.getCsNHormiga()+ "," +
                      csHormigaDTO.getCsTipo() + "," +
                      csHormigaDTO.getCsSexo() + "," + 
                      csHormigaDTO.getCsProvincia() + "," + 
                      csHormigaDTO.getCsIngestaNativa() + "," +
-                     csHormigaDTO.getCsGenoAlimento() + ","+ 
+                     csHormigaDTO.getCsGenoAlimento() + "," +
                      csHormigaDTO.getCsEstado());
             bw.newLine();
         }
     }
+    
 
     public void csDelete(int csNHormiga) throws IOException {
         List<CSHormigaDTO> hormigas = csReadAll();
         hormigas.removeIf(h -> h.getCsNHormiga() == csNHormiga);
-        
+    
+        // Reenumerar los registros restantes
+        int contador = 1;
+        for (CSHormigaDTO h : hormigas) {
+            h.setCsNHormiga(contador); // Reasigna el número de registro
+            contador++;
+        }
+    
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(csFilePath))) {
             for (CSHormigaDTO h : hormigas) {
                 bw.write(h.getCsNHormiga() + "," + 
                          h.getCsTipo() + "," + 
                          h.getCsSexo() + "," + 
                          h.getCsProvincia() + "," + 
-                         h.getCsIngestaNativa() + "," +
-                         h.getCsIngestaNativa() + ","+
-                         h.getCsEstado() 
-                        );
+                         h.getCsIngestaNativa() + "," + 
+                         h.getCsEstado());
                 bw.newLine();
             }
         }
     }
+    
 }

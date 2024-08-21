@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class CSSeccionExperimentosPanel extends JPanel {
     private JTable csTabla;
+    private Object[] csLarvaNueva = {1, "larva", "-", "Loja", "Nectivoro", "VIVA"}; 
     private DefaultTableModel csModeloTabla;
 
     public CSSeccionExperimentosPanel() {
@@ -26,6 +27,12 @@ public class CSSeccionExperimentosPanel extends JPanel {
         csTabla = new JTable(csModeloTabla);
         csTabla.setPreferredScrollableViewportSize(new Dimension(500, 200));
         JScrollPane scrollPane = new JScrollPane(csTabla);
+
         add(scrollPane);
+    }
+
+    public void csAddLarva() {
+        csModeloTabla.addRow(csLarvaNueva);
+        System.out.println("creando larva...");
     }
 }

@@ -10,8 +10,11 @@ public class CSButtonsPanel extends JPanel {
     JButton csBtnCrearLarva;
     JButton csBtnALimentar;
     JButton csBtnEliminar;
-    JButton csBtnGuardar; 
-    public CSButtonsPanel(){
+    JButton csBtnGuardar;
+    CSSeccionExperimentosPanel csSeccionExperimentosPanel;
+
+    public CSButtonsPanel(CSSeccionExperimentosPanel csSeccionExperimentosPanel){
+        this.csSeccionExperimentosPanel = csSeccionExperimentosPanel;
         csCustomizeComponent();
     }
 
@@ -24,9 +27,13 @@ public class CSButtonsPanel extends JPanel {
         csBtnEliminar  = new JButton("Eliminar");
         csBtnGuardar   = new JButton("Guardar");
 
+        csBtnCrearLarva.addActionListener(e -> {csSeccionExperimentosPanel.csAddLarva();}
+        );
+
         add(csBtnCrearLarva);
         add(csBtnALimentar);
         add(csBtnEliminar);
         add(csBtnGuardar);
     }
+
 }
