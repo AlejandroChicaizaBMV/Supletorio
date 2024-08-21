@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import CSDAC.CSDTO.CSHormigaDTO;
+
 public class CSSeccionExperimentosPanel extends JPanel {
     private JTable csTabla;
     private DefaultTableModel csModeloTabla;
@@ -25,6 +27,7 @@ public class CSSeccionExperimentosPanel extends JPanel {
         csModeloTabla.addColumn("Sexo");
         csModeloTabla.addColumn("Provincia");
         csModeloTabla.addColumn("IngestaNativa");
+        csModeloTabla.addColumn("GenoAlimento");
         csModeloTabla.addColumn("Estado");
 
         csTabla = new JTable(csModeloTabla);
@@ -35,28 +38,55 @@ public class CSSeccionExperimentosPanel extends JPanel {
     }
 
     public void csAddLarva() {
-        List<Object[]> csRows = new ArrayList<>();
-        csRows = csGetAllRows();
-        int csNReg = csRows.size() + 1;
-
-        String csProvincia= csProvinciaRandom() ;
-        Object[] csLarvaNueva = {csNReg, "larva", "-", csProvincia, "Nectivoro", "VIVA"};
-        csModeloTabla.addRow(csLarvaNueva);
-        System.out.println("creando larva...");
+        List<CSHormigaDTO> csHormigas = csGetAllRows(); // Obtiene todas las hormigas existentes
+        int csNReg = csHormigas.size() + 1; // Determina el nuevo ID basado en el tamaño de la lista
+    
+        String csProvincia = csProvinciaRandom(); // Genera una provincia aleatoria
+    
+        // Crea una nueva instancia de CSHormigaDTO para representar la larva
+        CSHormigaDTO csLarvaNueva = new CSHormigaDTO(csNReg, "larva", "-", csProvincia, "Nectivoro","X", "VIVA");
+    
+        // Agrega la nueva larva al modelo de la tabla
+        csModeloTabla.addRow(new Object[] {
+            csLarvaNueva.getCsNHormiga(),
+            csLarvaNueva.getCsTipo(),
+            csLarvaNueva.getCsSexo(),
+            csLarvaNueva.getCsProvincia(),
+            csLarvaNueva.getCsIngestaNativa(),
+            csLarvaNueva.getCsGenoAlimento(),
+            csLarvaNueva.getCsEstado()
+        });
+    
+        System.out.println("Creando larva...");
     }
+    
 
     
-    public List<Object[]> csGetAllRows() {
-        List<Object[]> csRows = new ArrayList<>();
+    public List<CSHormigaDTO> csGetAllRows() {
+        List<CSHormigaDTO> csHormigas = new ArrayList<>();
+    
         for (int i = 0; i < csModeloTabla.getRowCount(); i++) {
-            int columnCount = csModeloTabla.getColumnCount();
-            Object[] row = new Object[columnCount];
-            for (int j = 0; j < columnCount; j++) {
-                row[j] = csModeloTabla.getValueAt(i, j);
-            }
-            csRows.add(row);
+            int csNHormiga = (int) csModeloTabla.getValueAt(i, 0);
+            String csTipo = (String) csModeloTabla.getValueAt(i, 1);
+            String csSexo = (String) csModeloTabla.getValueAt(i, 2);
+            String csProvincia = (String) csModeloTabla.getValueAt(i, 3);
+            String csIngestaNativa = (String) csModeloTabla.getValueAt(i, 4);
+            String csGenoAlimento = (String) csModeloTabla.getValueAt(i, 5);
+            String csEstado = (String) csModeloTabla.getValueAt(i, 6);
+    
+            // Crea una nueva instancia de CSHormigaDTO con los valores obtenidos
+            CSHormigaDTO csHormigaDTO = new CSHormigaDTO(csNHormiga, csTipo, csSexo, csProvincia, csIngestaNativa, csGenoAlimento, csEstado);
+            
+            csHormigas.add(csHormigaDTO); // Agrega la hormiga a la lista
         }
-        return csRows;
+    
+        return csHormigas;
+    }
+    
+
+    public void csEliminarReg() {
+        csModeloTabla.setRowCount(0);
+        System.out.println("Eliminando Registros...");
     }
 
     private String csProvinciaRandom() {

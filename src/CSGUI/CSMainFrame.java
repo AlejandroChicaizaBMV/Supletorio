@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 public class CSMainFrame extends JFrame{
     CSMainPanel csMainPanel = new CSMainPanel();
+    
     public CSMainFrame (String csTitleApp){
         csMainPanel = new CSMainPanel();
         csCustomizeComponent (csTitleApp);

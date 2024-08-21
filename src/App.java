@@ -1,6 +1,7 @@
 import CSBusinessLogic.CSHormigaBL;
 import CSDAC.CSDTO.CSHormigaDTO;
 import CSGUI.CSMainFrame;
+import CSGUI.CSSeccionExperimentosPanel;
 
 public class App {
     public static void main(String[] args) throws Exception {

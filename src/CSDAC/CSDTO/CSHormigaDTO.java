@@ -22,7 +22,6 @@ public class CSHormigaDTO {
 
             
             
-            
     public CSHormigaDTO(String csTipo, String csSexo, String csProvincia, String csIngestaNativa, String csGenoAlimento,
             String csEstado) {
         this.csTipo = csTipo;

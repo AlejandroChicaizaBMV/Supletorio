@@ -43,22 +43,31 @@ public class CSHormigaDAO {
     }
     
 
-    public void csCreate(CSHormigaDTO csHormigaDTO) throws IOException {
-        List<CSHormigaDTO> hormigas = csReadAll(); 
-        int nuevoId = hormigas.size() + 1;
-        csHormigaDTO.setCsNHormiga(nuevoId); // Asigna el nuevo ID como el siguiente en la secuencia
+    public void csCreate(List<CSHormigaDTO> csList) throws IOException {
+        List<CSHormigaDTO> hormigasExistentes = csReadAll(); 
+        int nuevoId = hormigasExistentes.size() + 1;
     
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(csFilePath, true))) {
-            bw.write(csHormigaDTO.getCsNHormiga()+ "," +
-                     csHormigaDTO.getCsTipo() + "," +
-                     csHormigaDTO.getCsSexo() + "," + 
-                     csHormigaDTO.getCsProvincia() + "," + 
-                     csHormigaDTO.getCsIngestaNativa() + "," +
-                     csHormigaDTO.getCsGenoAlimento() + "," +
-                     csHormigaDTO.getCsEstado());
-            bw.newLine();
+            for (CSHormigaDTO csHormiga : csList) {
+                // Asigna el nuevo ID a cada hormiga y luego incrementa el ID para la siguiente hormiga
+                csHormiga.setCsNHormiga(nuevoId);
+                nuevoId++; // Incrementa el ID para la siguiente hormiga
+    
+                // Escribe la hormiga en el archivo CSV
+                bw.write(csHormiga.getCsNHormiga() + "," +
+                         csHormiga.getCsTipo() + "," +
+                         csHormiga.getCsSexo() + "," +
+                         csHormiga.getCsProvincia() + "," +
+                         csHormiga.getCsIngestaNativa() + "," +
+                         csHormiga.getCsGenoAlimento() + "," +
+                         csHormiga.getCsEstado());
+                bw.newLine();
+            }
         }
     }
+    
+    
+    
     
 
     public void csDelete(int csNHormiga) throws IOException {

@@ -2,8 +2,14 @@ package CSGUI;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.io.IOException;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import CSBusinessLogic.CSHormigaBL;
+import CSDAC.CSDTO.CSHormigaDTO;
 
 public class CSButtonsPanel extends JPanel {
 
@@ -27,8 +33,18 @@ public class CSButtonsPanel extends JPanel {
         csBtnEliminar  = new JButton("Eliminar");
         csBtnGuardar   = new JButton("Guardar");
 
-        csBtnCrearLarva.addActionListener(e -> {csSeccionExperimentosPanel.csAddLarva();}
-        );
+        csBtnCrearLarva.addActionListener(e -> {csSeccionExperimentosPanel.csAddLarva();});
+        csBtnEliminar.addActionListener(e -> {csSeccionExperimentosPanel.csEliminarReg();});
+        csBtnGuardar.addActionListener(e -> {
+            List<CSHormigaDTO> csHormigasList =  csSeccionExperimentosPanel.csGetAllRows();
+            CSHormigaBL csHormigaBL = new CSHormigaBL();
+            try {
+                csHormigaBL.csAgregarHormiga(csHormigasList);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
 
         add(csBtnCrearLarva);
         add(csBtnALimentar);

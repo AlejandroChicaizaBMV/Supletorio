@@ -20,8 +20,8 @@ public class CSHormigaBL {
         return csHormigaDAO.csReadAll();
     }
 
-    public void csAgregarHormiga(CSHormigaDTO csHormigaDTO) throws IOException {
-        csHormigaDAO.csCreate(csHormigaDTO);
+    public void csAgregarHormiga(List<CSHormigaDTO> csHormigasLista) throws IOException {
+        csHormigaDAO.csCreate(csHormigasLista);
     }
 
     public void csEliminarHormiga(int csNHormiga) throws IOException {
