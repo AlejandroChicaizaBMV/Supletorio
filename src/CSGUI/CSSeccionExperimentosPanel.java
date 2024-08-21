@@ -89,6 +89,22 @@ public class CSSeccionExperimentosPanel extends JPanel {
         System.out.println("Eliminando Registros...");
     }
 
+    public void csEvolucion() {
+        // Recorre todas las filas de la tabla
+        for (int i = 0; i < csModeloTabla.getRowCount(); i++) {
+            // Actualiza la columna "Tipo" a "Soldado"
+            csModeloTabla.setValueAt("Soldado", i, 1);
+            csModeloTabla.setValueAt("Masculino", i, 2);
+            // Actualiza la columna "GenoAlimento" a "XY"
+            csModeloTabla.setValueAt("XY", i, 5);
+            // Actualiza la columna "IngestaNativa" a "Carnivoro"
+            csModeloTabla.setValueAt("Carnivoro", i, 4);
+        }
+        
+        System.out.println("Evolución completada: Todas las hormigas han sido actualizadas a Tipo 'Soldado', GenoAlimento 'XY' e IngestaNativa 'Carnivoro'.");
+    }
+    
+
     private String csProvinciaRandom() {
         int csNRandom = random.nextInt(24 - 1 + 1) + 1;
         switch (csNRandom) {

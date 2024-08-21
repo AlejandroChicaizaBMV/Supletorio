@@ -20,7 +20,6 @@ public class CSAlimentoIngestaPanel extends JPanel {
 
     public CSAlimentoIngestaPanel() {
         csCustomizeComponent();
-
     }
 
     private void csCustomizeComponent() {
@@ -42,5 +41,14 @@ public class CSAlimentoIngestaPanel extends JPanel {
         
         add(csCBoxGenoAlimento);
         add(csCBoxIngestaNativa);
+    }
+
+    // Métodos getter para los JComboBox
+    public JComboBox<CSGenoAlimentoBL> getCsCBoxGenoAlimento() {
+        return csCBoxGenoAlimento;
+    }
+
+    public JComboBox<CSIngestaNativaBL> getCsCBoxIngestaNativa() {
+        return csCBoxIngestaNativa;
     }
 }
