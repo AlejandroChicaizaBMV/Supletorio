@@ -61,6 +61,10 @@ public class CSButtonsPanel extends JPanel {
             if(genoAlimentoSeleccionado.toString().equals("XY")){
                 csSeccionExperimentosPanel.csEvolucion();
             }
+
+            if(csSeccionExperimentosPanel.csGetIngesta().equals("Carnivoro") && !ingestaNativaSeleccionada.toString().equals("CARNIVORO")){
+                csSeccionExperimentosPanel.csMatar();
+            }
         });
 
         add(csBtnCrearLarva);
