@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import CSBL.Entities.CSHormiga;
 import CSDAC.CSDTO.CSHormigaDTO;
 
 public class CSHormigaDAO {
@@ -17,21 +18,19 @@ public class CSHormigaDAO {
         this.csFilePath = csFilePath;
     }
 
-    public List<CSHormigaDTO> csReadAll() throws IOException {
-        List<CSHormigaDTO> csHormigas = new ArrayList<>();
+    public List<CSHormiga> csReadAll() throws IOException {
+        List<CSHormiga> csHormigas = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csFilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] valores = line.split(",");
                 if (valores.length == 7) {  
-                    CSHormigaDTO hormiga = new CSHormigaDTO(
+                    CSHormiga hormiga = new CSHormiga(
                         Integer.parseInt(valores[0]), 
                         valores[1],
                         valores[2],
                         valores[3],
-                        valores[4],
-                        valores[5],
-                        valores[6]
+                        valores[4]
                     );
                     csHormigas.add(hormiga); 
                 } else {
@@ -43,24 +42,22 @@ public class CSHormigaDAO {
     }
     
 
-    public void csCreate(List<CSHormigaDTO> csList) throws IOException {
-        List<CSHormigaDTO> hormigasExistentes = csReadAll(); 
+    public void csCreate(List<CSHormiga> csList) throws IOException {
+        List<CSHormiga> hormigasExistentes = csReadAll(); 
         int nuevoId = hormigasExistentes.size() + 1;
     
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(csFilePath, true))) {
-            for (CSHormigaDTO csHormiga : csList) {
+            for (CSHormiga csHormiga : csList) {
                 // Asigna el nuevo ID a cada hormiga y luego incrementa el ID para la siguiente hormiga
-                csHormiga.setCsNHormiga(nuevoId);
+                csHormiga.setId(nuevoId);
                 nuevoId++; // Incrementa el ID para la siguiente hormiga
     
                 // Escribe la hormiga en el archivo CSV
-                bw.write(csHormiga.getCsNHormiga() + "," +
-                         csHormiga.getCsTipo() + "," +
-                         csHormiga.getCsSexo() + "," +
-                         csHormiga.getCsProvincia() + "," +
-                         csHormiga.getCsIngestaNativa() + "," +
-                         csHormiga.getCsGenoAlimento() + "," +
-                         csHormiga.getCsEstado());
+                bw.write(csHormiga.getId() + "," +
+                         csHormiga.getTipo() + "," +
+                         csHormiga.getSexo() + "," +
+                         csHormiga.getAlimentacion() + "," +
+                         csHormiga.getEstado());
                 bw.newLine();
             }
         }
@@ -71,24 +68,23 @@ public class CSHormigaDAO {
     
 
     public void csDelete(int csNHormiga) throws IOException {
-        List<CSHormigaDTO> hormigas = csReadAll();
-        hormigas.removeIf(h -> h.getCsNHormiga() == csNHormiga);
+        List<CSHormiga> hormigas = csReadAll();
+        hormigas.removeIf(h -> h.getId() == csNHormiga);
     
         // Reenumerar los registros restantes
         int contador = 1;
-        for (CSHormigaDTO h : hormigas) {
-            h.setCsNHormiga(contador); // Reasigna el número de registro
+        for (CSHormiga h : hormigas) {
+            h.setId(contador); // Reasigna el número de registro
             contador++;
         }
     
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(csFilePath))) {
-            for (CSHormigaDTO h : hormigas) {
-                bw.write(h.getCsNHormiga() + "," + 
-                         h.getCsTipo() + "," + 
-                         h.getCsSexo() + "," + 
-                         h.getCsProvincia() + "," + 
-                         h.getCsIngestaNativa() + "," + 
-                         h.getCsEstado());
+            for (CSHormiga h : hormigas) {
+                bw.write(h.getId() + "," + 
+                         h.getTipo() + "," + 
+                         h.getSexo() + "," + 
+                         h.getAlimentacion() + "," + 
+                         h.getEstado());
                 bw.newLine();
             }
         }

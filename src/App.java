@@ -1,4 +1,4 @@
-import CSBusinessLogic.CSHormigaBL;
+import CSBL.CSHormigaBL;
 import CSDAC.CSDTO.CSHormigaDTO;
 import CSGUI.CSMainFrame;
 import CSGUI.CSSeccionExperimentosPanel;
